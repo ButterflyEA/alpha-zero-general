@@ -129,6 +129,7 @@ class MasterTicTacToe(TicTacToeGame):
     def __init__(self, n=9):
         super().__init__(n)
         self.last_action = None  
+        self.master_board = Board(3)
 
     def getNextState(self, board, player, action):
         b,p = super().getNextState(board, player, action)
@@ -171,7 +172,7 @@ class MasterTicTacToe(TicTacToeGame):
     
     def getGameEnded(self, board, player):
         g = TicTacToeGame(3)
-        master_board = Board(3)
+        
         for row in range(0, self.n, 3):
             for col in range(0, self.n, 3):
                 b = Board(3)
@@ -180,10 +181,14 @@ class MasterTicTacToe(TicTacToeGame):
                 if winner == 0:
                     continue
                 elif winner > 0 and winner < 1:
-                    master_board[col//3][row//3] = 0
+                    self.master_board[col//3][row//3] = 2
                 else:
-                    master_board[col//3][row//3] = winner
-        winner = g.getGameEnded(master_board.pieces, player)
+                    self.master_board[col//3][row//3] = winner
+        winner = g.getGameEnded(self.master_board.pieces, player)
+        if winner != 0:
+            for col in range(self.master_board.n):
+                for row in range(self.master_board.n):
+                   self.master_board[col][row] = 0
         return winner
 
 

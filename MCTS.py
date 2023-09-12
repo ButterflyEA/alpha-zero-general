@@ -12,6 +12,7 @@ class MCTS():
     """
     This class handles the MCTS tree.
     """
+    counter = 0
 
     def __init__(self, game, nnet, args):
         self.game = game
@@ -35,6 +36,7 @@ class MCTS():
                    proportional to Nsa[(s,a)]**(1./temp)
         """
         for i in range(self.args.numMCTSSims):
+            MCTS.counter = 0
             self.search(canonicalBoard)
 
         s = self.game.stringRepresentation(canonicalBoard)
@@ -71,7 +73,7 @@ class MCTS():
         Returns:
             v: the negative of the value of the current canonicalBoard
         """
-
+        MCTS.counter += 1
         s = self.game.stringRepresentation(canonicalBoard)
 
         if s not in self.Es:

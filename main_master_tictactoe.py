@@ -3,7 +3,7 @@ import logging
 import coloredlogs
 
 from Coach import Coach
-from tictactoe_master.TicTacToeGame import TicTacToeGame as Game
+from tictactoe_master.TicTacToeGame import MasterTicTacToe as Game
 from tictactoe_master.keras.NNet import NNetWrapper as nn
 from utils import *
 
