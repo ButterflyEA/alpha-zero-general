@@ -129,7 +129,7 @@ class MasterTicTacToe(TicTacToeGame):
     def __init__(self, n=9):
         super().__init__(n)
         self.last_action = None  
-        self.master_board = Board(3)
+        # self.master_board = Board(3)
 
     def getNextState(self, board, player, action):
         b,p = super().getNextState(board, player, action)
@@ -160,10 +160,19 @@ class MasterTicTacToe(TicTacToeGame):
             # getting the legal moves in the small board
             legalMoves =  b_cp.get_legal_moves(player)
             if len(legalMoves)==0:
-                valids[-1]=1
-                return np.array(valids)
+                legalMoves =  b.get_legal_moves(player)
+                if len(legalMoves)==0:
+                    valids[-1]=1
+                    return np.array(valids)
+                # because we moved to check the big board we don't need the offset
+                _x = 0
+                _y = 0
             #returning the valid coords in the big board
             for x, y in legalMoves:
+                # x is the offset in the small board
+                # _x is the start of the small board in big board coord
+                # x_ is the absolute location in the big board
+                # this converted to the location in flat coordinates
                 x_ = _x + x
                 y_= _y + y
                 valids[self.n*x_+y_]=1
@@ -172,6 +181,7 @@ class MasterTicTacToe(TicTacToeGame):
     
     def getGameEnded(self, board, player):
         g = TicTacToeGame(3)
+        master_board = Board(3)
         
         for row in range(0, self.n, 3):
             for col in range(0, self.n, 3):
@@ -181,18 +191,19 @@ class MasterTicTacToe(TicTacToeGame):
                 if winner == 0:
                     continue
                 elif winner > 0 and winner < 1:
-                    self.master_board[col//3][row//3] = 2
+                    master_board[col//3][row//3] = 2
                 else:
                     if winner == 1:
-                        self.master_board[col//3][row//3] = player
+                        master_board[col//3][row//3] = player
                     elif winner == -1:
-                        self.master_board[col//3][row//3] = -player
+                        master_board[col//3][row//3] = -player
 
-        winner = g.getGameEnded(self.master_board.pieces, player)
+        winner = g.getGameEnded(master_board.pieces, player)
         if winner != 0:
-            for col in range(self.master_board.n):
-                for row in range(self.master_board.n):
-                   self.master_board[col][row] = 0
+            pass
+            # for col in range(self.master_board.n):
+            #     for row in range(self.master_board.n):
+            #        self.master_board[col][row] = 0
         return winner
 
 
