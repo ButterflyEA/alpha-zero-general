@@ -183,7 +183,11 @@ class MasterTicTacToe(TicTacToeGame):
                 elif winner > 0 and winner < 1:
                     self.master_board[col//3][row//3] = 2
                 else:
-                    self.master_board[col//3][row//3] = winner
+                    if winner == 1:
+                        self.master_board[col//3][row//3] = player
+                    elif winner == -1:
+                        self.master_board[col//3][row//3] = -player
+
         winner = g.getGameEnded(self.master_board.pieces, player)
         if winner != 0:
             for col in range(self.master_board.n):
