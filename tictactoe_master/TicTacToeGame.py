@@ -200,7 +200,7 @@ class MasterTicTacToe(TicTacToeGame):
 
         winner = g.getGameEnded(master_board.pieces, player)
         if winner != 0:
-            pass
+            self.last_action = None
             # for col in range(self.master_board.n):
             #     for row in range(self.master_board.n):
             #        self.master_board[col][row] = 0

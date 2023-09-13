@@ -47,8 +47,10 @@ class Arena():
                 assert self.display
                 print("Turn ", str(it), "Player ", str(curPlayer))
                 self.display(board)
-            action = players[curPlayer + 1](self.game.getCanonicalForm(board, curPlayer))
 
+            last_action = self.game.last_action    
+            action = players[curPlayer + 1](self.game.getCanonicalForm(board, curPlayer))
+            self.game.last_action = last_action
             valids = self.game.getValidMoves(self.game.getCanonicalForm(board, curPlayer), 1)
 
             if valids[action] == 0:

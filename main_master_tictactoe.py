@@ -23,7 +23,7 @@ args = dotdict({
 
     'checkpoint': './temp/',
     'load_model': False,
-    'load_folder_file': ('/dev/models/master_tictactoe','best.pth.tar'),
+    'load_folder_file': ('/master_tictactoe/keras/','best.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 
 })
